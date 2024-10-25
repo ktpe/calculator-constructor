@@ -1,0 +1,20 @@
+# PostgreSQL. Versions 9.3 and up are supported.
+#
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: <%= ENV.fetch("CALCULATOR_CONSTRUCTOR_DATABASE_HOST") { "localhost" } %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV.fetch("CALCULATOR_CONSTRUCTOR_DATABASE_USERNAME") { "calculator_constructor" } %>
+  password: <%= ENV["CALCULATOR_CONSTRUCTOR_DATABASE_PASSWORD"] %>
+  port: <%= ENV.fetch("CALCULATOR_CONSTRUCTOR_DATABASE_PORT") { "5432" } %>
+
+development:
+  <<: *default
+  database: calculator_constructor_development
+test:
+  <<: *default
+  database: calculator_constructor_test
+production:
+  <<: *default
+  database: calculator_constructor_production
