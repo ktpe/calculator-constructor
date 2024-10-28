@@ -33,6 +33,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_28_140202) do
     t.bigint "calculator_id", null: false
     t.string "type", null: false
     t.string "label", null: false
+    t.string "var_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["calculator_id"], name: "index_fields_on_calculator_id"
