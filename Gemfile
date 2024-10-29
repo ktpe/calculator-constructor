@@ -82,7 +82,7 @@ gem "simple_form", git: "https://github.com/loqimean/simple_form"
 gem "ransack"
 gem "kaminari"
 gem "meta-tags"
-gem "rails-i18n", "~> 7.0.0"
+gem "rails-i18n", "~> 7.0.10"
 gem "inline_svg", "~> 1.8"
 # gem "awesome_print", groups: [:development, :test]
 # gem "babosa"
