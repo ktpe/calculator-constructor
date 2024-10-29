@@ -1,0 +1,93 @@
+<h1>New Calculator</h1>
+
+<% if flash[:notice] %>
+  <p style="color: green;"><%= flash[:notice] %></p>
+<% elsif flash[:alert] %>
+  <p style="color: red;"><%= flash[:alert] %></p>
+<% end %>
+
+<%= form_with model: @calculator, url: calculators_path, method: :post do |f| %>
+  <div>
+    <%= f.label :name, "Calculator Name" %>
+    <%= f.text_field :name, placeholder: "Enter calculator name" %>
+  </div>
+
+  <h3>Fields</h3>
+
+  <%= f.fields_for :fields do |field_form| %>
+    <div>
+      <%= field_form.label :label, "Field Label" %>
+      <%= field_form.text_field :label, placeholder: "Enter field label" %>
+    </div>
+    <div>
+      <%= field_form.label :var_name, "Variable Name" %>
+      <%= field_form.text_field :var_name, placeholder: "Enter variable name", id: 'var_name_input' %>
+    </div>
+    <div>
+      <%= field_form.label :field_type, "Field Type" %>
+      <%= field_form.select :field_type, options_for_select([['Number', 'number'], ['Select', 'select']]), { prompt: 'Select Field Type' }, { id: 'field_type_select' } %>
+    </div>
+
+    <div id="select_fields" style="display: none;">
+      <h4>Categories</h4>
+      <div class="category">
+        <div>
+          <label for="category_name">Key (Category Name)</label>
+          <input type="text" name="category_name[]" placeholder="Enter category name">
+        </div>
+        <div>
+          <label for="category_price">Value (Price)</label>
+          <input type="number" name="category_price[]" placeholder="Enter price">
+        </div>
+      </div>
+      <button type="button" id="add_category">Add Another Category</button>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :formula, "Formula" %>
+    <%= f.text_field :expression, placeholder: "Formula will be generated", id: 'formula_input', readonly: true %>
+  </div>
+
+  <div>
+    <%= f.submit "Submit" %>
+  </div>
+<% end %>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const fieldTypeSelect = document.getElementById("field_type_select");
+    const selectFieldsDiv = document.getElementById("select_fields");
+    const varNameInput = document.getElementById("var_name_input");
+    const formulaInput = document.getElementById("formula_input");
+
+    fieldTypeSelect.addEventListener("change", function() {
+      if (fieldTypeSelect.value === "select") {
+        selectFieldsDiv.style.display = "block";
+      } else {
+        selectFieldsDiv.style.display = "none";
+      }
+    });
+
+    // Update formula when var_name changes
+    varNameInput.addEventListener("input", function() {
+      formulaInput.value = "%" + varNameInput.value;
+    });
+
+    document.getElementById("add_category").addEventListener("click", function() {
+      const newCategoryDiv = document.createElement("div");
+      newCategoryDiv.className = "category";
+      newCategoryDiv.innerHTML = `
+        <div>
+          <label for="category_name">Key (Category Name)</label>
+          <input type="text" name="category_name[]" placeholder="Enter category name">
+        </div>
+        <div>
+          <label for="category_price">Value (Price)</label>
+          <input type="number" name="category_price[]" placeholder="Enter price">
+        </div>
+      `;
+      selectFieldsDiv.appendChild(newCategoryDiv);
+    });
+  });
+</script>

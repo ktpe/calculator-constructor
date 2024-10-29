@@ -31,7 +31,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_28_140202) do
 
   create_table "fields", force: :cascade do |t|
     t.bigint "calculator_id", null: false
-    t.string "type", null: false
+    t.string "field_type", null: false
     t.string "label", null: false
     t.string "var_name", null: false
     t.datetime "created_at", null: false
